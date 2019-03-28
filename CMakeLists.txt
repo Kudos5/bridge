@@ -18,6 +18,7 @@ add_library(bridge STATIC bridge.cpp bridge.hpp)
 add_executable(test test.cpp)
 target_compile_features(project_options INTERFACE cxx_std_17)
 target_include_directories(bridge PRIVATE ${CONAN_INCLUDE_DIRS})
+# Taken from: https://github.com/lefticus/cpp_box
 target_compile_options(project_warnings
                          INTERFACE -Wall
                                    -Werror # treat all warnings as errors
