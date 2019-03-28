@@ -7,9 +7,8 @@ namespace Bridge {
 
 void Bridge::Play(Card c) {
     Expects(phase() == Phase::Play);
-    if ( phase() == Phase::Play) {
-        std::cout << static_cast<int>(phase()) << std::endl;
-    }
+
+    std::cout << "Playing card: " << static_cast<int>(c.suit) << " " << static_cast<int>(c.rank) << std::endl;
 }
 
 } // end namespace Bridge
