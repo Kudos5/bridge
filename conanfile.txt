@@ -1,0 +1,6 @@
+
+[requires]
+gsl_microsoft/20180102@bincrafters/stable
+
+[generators]
+cmake
