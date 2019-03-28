@@ -8,14 +8,12 @@ endif()
 project(Bridge VERSION 0.1 
                   DESCRIPTION "Bridge"
                   LANGUAGES CXX)
-
+include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 
 add_library(project_options INTERFACE)
 add_library(project_warnings INTERFACE)
-add_library(bridge STATIC bridge.cpp bridge.hpp)
-add_executable(test test.cpp)
 target_compile_features(project_options INTERFACE cxx_std_17)
-target_include_directories(bridge PRIVATE ${CONAN_INCLUDE_DIRS})
+target_include_directories(project_options INTERFACE include external)
 # Taken from: https://github.com/lefticus/cpp_box
 target_compile_options(project_warnings
                          INTERFACE -Wall
@@ -62,16 +60,27 @@ target_compile_options(project_warnings
 #       "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
 #   file(
 #     DOWNLOAD
-#       "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.12/conan.cmake"
+#       "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.13/conan.cmake"
 #       "${CMAKE_BINARY_DIR}/conan.cmake")
 # endif()
 # 
 # include(${CMAKE_BINARY_DIR}/conan.cmake)
 # conan_check(REQUIRED)
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
+# conan_cmake_run(CONANFILE
+#                 conanfile.txt
+#                 BASIC_SETUP
+#                 CONAN_COMMAND
+#                 ${CONAN_CMD}
+#                 CMAKE_TARGETS
+#                 BUILD
+#                 missing)
 
+find_package(gsl_microsoft)
+
+add_library(bridge STATIC bridge.cpp bridge.hpp)
+target_link_libraries(bridge PUBLIC gsl_microsoft::gsl_microsoft)
+add_executable(test test.cpp)
 
 target_link_libraries(test
     PRIVATE project_options project_warnings bridge)
-	
+
