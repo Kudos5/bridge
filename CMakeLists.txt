@@ -8,12 +8,12 @@ endif()
 project(Bridge VERSION 0.1 
                   DESCRIPTION "Bridge"
                   LANGUAGES CXX)
-include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 
 add_library(project_options INTERFACE)
 add_library(project_warnings INTERFACE)
 target_compile_features(project_options INTERFACE cxx_std_17)
 target_include_directories(project_options INTERFACE include external)
+
 # Taken from: https://github.com/lefticus/cpp_box
 target_compile_options(project_warnings
                          INTERFACE -Wall
@@ -53,7 +53,6 @@ target_compile_options(project_warnings
 #
 # Load Conan
 #
-
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
   message(
     STATUS
@@ -63,7 +62,6 @@ if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
       "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.13/conan.cmake"
       "${CMAKE_BINARY_DIR}/conan.cmake")
 endif()
-
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_check(REQUIRED)
 conan_cmake_run(CONANFILE
@@ -75,6 +73,7 @@ conan_cmake_run(CONANFILE
                 BUILD
                 missing)
 
+include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 find_package(gsl_microsoft)
 
 add_library(bridge STATIC bridge.cpp bridge.hpp)

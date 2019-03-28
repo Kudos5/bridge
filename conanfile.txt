@@ -3,6 +3,5 @@
 gsl_microsoft/20180102@bincrafters/stable
 
 [generators]
-# cmake
 cmake_find_package
 cmake_paths
