@@ -5,7 +5,9 @@
 #ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif // __GNUC__
 #include <gsl/gsl>
+#ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif // __GNUC__
 
