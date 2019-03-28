@@ -2,10 +2,12 @@
 #ifndef _BRIDGE_HPP_
 #define _BRIDGE_HPP_
 
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #include <gsl/gsl>
 #pragma GCC diagnostic pop
+#endif // __GNUC__
 
 namespace Bridge {
 enum class Phase {
