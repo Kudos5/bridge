@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# build folder
+build
+
+# Pipfile
+Pipfile
+Pipfile.lock
+
+# swp files
+*.swp
