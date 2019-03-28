@@ -51,7 +51,34 @@ target_compile_options(project_warnings
                                    -Wformat=2 # warn on security issues around
                                               # functions that format output (ie
                                               # printf)
+
                          )
+# Taken from https://github.com/ChaiScript/ChaiScript/blob/develop/.travis.yml
+#
+# Load Conan
+#
+
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+  message(
+    STATUS
+      "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+  file(
+    DOWNLOAD
+      "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.12/conan.cmake"
+      "${CMAKE_BINARY_DIR}/conan.cmake")
+endif()
+
+include(${CMAKE_BINARY_DIR}/conan.cmake)
+conan_check(REQUIRED)
+conan_cmake_run(CONANFILE
+                conanfile.txt
+                BASIC_SETUP
+                CONAN_COMMAND
+                ${CONAN_CMD}
+                CMAKE_TARGETS
+                BUILD
+                missing)
+
 
 target_link_libraries(test
     PRIVATE project_options project_warnings bridge)
