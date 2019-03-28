@@ -9,8 +9,6 @@ project(Bridge VERSION 0.1
                   DESCRIPTION "Bridge"
                   LANGUAGES CXX)
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
 
 add_library(project_options INTERFACE)
 add_library(project_warnings INTERFACE)
@@ -58,26 +56,20 @@ target_compile_options(project_warnings
 # Load Conan
 #
 
-if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-  message(
-    STATUS
-      "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-  file(
-    DOWNLOAD
-      "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.12/conan.cmake"
-      "${CMAKE_BINARY_DIR}/conan.cmake")
-endif()
-
-include(${CMAKE_BINARY_DIR}/conan.cmake)
-conan_check(REQUIRED)
-conan_cmake_run(CONANFILE
-                conanfile.txt
-                BASIC_SETUP
-                CONAN_COMMAND
-                ${CONAN_CMD}
-                CMAKE_TARGETS
-                BUILD
-                missing)
+# if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+#   message(
+#     STATUS
+#       "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+#   file(
+#     DOWNLOAD
+#       "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.12/conan.cmake"
+#       "${CMAKE_BINARY_DIR}/conan.cmake")
+# endif()
+# 
+# include(${CMAKE_BINARY_DIR}/conan.cmake)
+# conan_check(REQUIRED)
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
 
 target_link_libraries(test
