@@ -45,14 +45,41 @@ struct Card {
     Rank rank;
 };
 
+enum class Player {
+    South,
+    West,
+    North,
+    East
+};
+
+enum class Vulnerability {
+    None,
+    Ns,
+    Ew,
+    All
+};
+
 class Bridge {
     public:
-        void Play(Card c);
+        constexpr Bridge(Player dealer, Vulnerability vulnerability) noexcept;
+        constexpr auto Play(Card c) const noexcept -> void;
     private:
-        Phase m_phase = Phase::Play;
+        Player m_dealer;
+        Vulnerability m_vulnerability;
+        Phase m_phase;
         [[nodiscard]] constexpr auto phase() const noexcept -> Phase {return m_phase;};
 };
 
+constexpr Bridge::Bridge(Player dealer, Vulnerability vulnerability) noexcept
+    : m_dealer(dealer), m_vulnerability(vulnerability), m_phase(Phase::Play)
+{
+}
+
+constexpr auto Bridge::Play(Card c) const noexcept -> void
+{
+    Expects(phase() == Phase::Play);
+    Expects(c.suit == Suit::Spades);
+}
 } // end namespace Bridge
 
 #endif // _BRIDGE_HPP_
