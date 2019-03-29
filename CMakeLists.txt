@@ -85,7 +85,7 @@ find_package(gsl_microsoft)
 find_package(catch2)
 
 add_library(bridge STATIC bridge.cpp bridge.hpp)
-target_link_libraries(bridge PUBLIC gsl_microsoft::gsl_microsoft)
+target_link_libraries(bridge PUBLIC gsl_microsoft::gsl_microsoft PRIVATE project_options project_warnings)
 add_executable(test_main test.cpp)
 
 target_link_libraries(test_main
