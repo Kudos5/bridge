@@ -4,12 +4,18 @@
 
 #include "bridge.hpp"
 
-TEST_CASE( "Card is played", "[Bridge::Play]" ) {
+SCENARIO( "cards can be played ", "[bridge]" ) {
 	using Bridge::Bridge;
     using namespace Bridge;
-    Bridge b;
-    Card c{Suit::Spades, Rank::Ace};
-    b.Play(c);
-    REQUIRE( true );
+    GIVEN( "A game of bridge" ) {
+        Bridge b;
+        WHEN( "a card is played" ) {
+            Card c{Suit::Spades, Rank::Ace};
+            b.Play(c);
+            THEN( "nothing happens" ) {
+                REQUIRE( false );
+            }
+        }
+    }
 }
 
