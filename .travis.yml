@@ -48,4 +48,5 @@ script:
   - cd build
   - cmake $CMAKE_OPTS  -D CMAKE_EXE_LINKER_FLAGS=${LINKER_FLAGS} ..
   - VERBOSE=1 cmake --build . -- -j2
+  - ctest
 

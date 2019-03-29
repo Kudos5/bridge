@@ -1,6 +1,7 @@
 
 [requires]
 gsl_microsoft/20180102@bincrafters/stable
+catch2/2.5.0@bincrafters/stable
 
 [generators]
 cmake_find_package

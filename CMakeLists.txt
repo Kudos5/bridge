@@ -82,11 +82,16 @@ conan_cmake_run(CONANFILE
 
 include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 find_package(gsl_microsoft)
+find_package(catch2)
 
 add_library(bridge STATIC bridge.cpp bridge.hpp)
 target_link_libraries(bridge PUBLIC gsl_microsoft::gsl_microsoft)
-add_executable(test test.cpp)
+add_executable(test_main test.cpp)
 
-target_link_libraries(test
-    PRIVATE project_options project_warnings bridge)
+target_link_libraries(test_main
+    PRIVATE project_options project_warnings bridge catch2::catch2)
 
+include(${CONAN_CATCH2_ROOT}/lib/cmake/Catch2/Catch.cmake)
+
+enable_testing()
+catch_discover_tests(test_main TEST_PREFIX "bridge.")
