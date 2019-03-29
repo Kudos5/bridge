@@ -1,2 +1,46 @@
 
 language: cpp
+
+matrix:
+  include:
+      os: linux
+      sudo: false
+      compiler:
+  	    - gcc
+  	    - clang
+      env: GCC_VER="7"
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "eQRzStry359eKKdihoYZrWUiuQmDs7oyaTarYw1hCBGjGoVJFonNKRQ3HMjELJRSoRZeX9cC2p6wPdoGwLWvc/jQSqEk7GJqN271KScY844qECBOqQGIf4ZwxzbdnSHFV4NxlAW7q0yxH2tMmcKSWkdfzxFt97YuZ0vEEEtlJlNVmTh8UKbWTIEUAHqzvj1h49bHbmgdzXS27V4/TbQPPWogdWnq/47NW2R36YtVFqnRDmwfCsWd6/rmA7czzhYny+tG5IwqSYorKmkZNRd4ohcudBbaRethcyotJYvQAqVpFc/rAYTcW4rUNEsLyFsa//maQS3+ObkfV2IrKFVzX5MNrfHuVxoiZit783xepSU7zTSOl8LmQYYQKfCaNXHeocV4BhA++cd2rfdJ1thhHXRhIHoqHGB7lMrOZQRtMn8A1c1nbw9Z1un4VfG8By4PeEB+ZtNgdMu5+dLrvyQGWRqNcl5MCZeRm8zb1MEpss39JMnzBbR4ARgURK0cUQzONUr0rpB9ZIEMFneGpeO0k6blETT8KnSOdPekmbAB3rqC4xxWbqLz6oakbvdtftqzNlUOXJa+gAXC0gI/OR8akk25tqi6kJDDzjldqV6HGi6sy6sgeDYSVUvYV4dQw7rLwos7YB437mIsU1KhfAG2CyjA8bUUmCIUjxeQybJYmYQ="
+
+before_install:
+  - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+addons:
+  coverity_scan:
+    project:
+      name: "Kudos5/bridge"
+      description: "Bridge"
+    notification_email: anderssp1994@gmail.com
+    build_command_prepend: "cmake -D ENABLE_COVERAGE:BOOL=TRUE -D CMAKE_BUILD_TYPE:STRING=Debug . "
+    build_command: "cmake --build . -- -j2"
+    branch_pattern: coverity_scan
+
+
+install:
+  pip install --user conan cmake
+
+script:
+  - which cmake
+  - cmake --version
+  - echo $CXX
+  - echo $CMAKE_OPTS
+  - $CXX --version
+  - mkdir build
+  - cd build
+  - cmake $CMAKE_OPTS ..
+  - VERBOSE=1 cmake --build . -- -j2
+
