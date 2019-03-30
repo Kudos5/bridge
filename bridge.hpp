@@ -61,19 +61,19 @@ enum class Vulnerability {
 
 class Bridge {
     public:
-        constexpr Bridge(Player dealer, Vulnerability vulnerability) noexcept;
+        // constexpr Bridge(Player dealer, Vulnerability vulnerability) noexcept;
         constexpr auto Play(Card c) const noexcept -> void;
     private:
-        Player m_dealer;
-        Vulnerability m_vulnerability;
+        // Player m_dealer;
+        // Vulnerability m_vulnerability;
         Phase m_phase;
         [[nodiscard]] constexpr auto phase() const noexcept -> Phase {return m_phase;};
 };
 
-constexpr Bridge::Bridge(Player dealer, Vulnerability vulnerability) noexcept
-    : m_dealer(dealer), m_vulnerability(vulnerability), m_phase(Phase::Play)
-{
-}
+// constexpr Bridge::Bridge(Player dealer, Vulnerability vulnerability) noexcept
+//     : m_dealer(dealer), m_vulnerability(vulnerability), m_phase(Phase::Play)
+// {
+// }
 
 constexpr auto Bridge::Play(Card c) const noexcept -> void
 {

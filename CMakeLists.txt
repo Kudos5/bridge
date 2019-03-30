@@ -86,14 +86,12 @@ find_package(catch2)
 
 # add_library(bridge STATIC bridge.cpp bridge.hpp)
 # target_link_libraries(bridge PUBLIC gsl_microsoft::gsl_microsoft PRIVATE project_options project_warnings)
-add_library(test_bridge test_bridge.cpp)
-target_link_libraries(test_bridge PUBLIC gsl_microsoft::gsl_microsoft catch2::catch2 PRIVATE project_options project_warnings)
-add_executable(test_main test.cpp)
+add_executable(test_main test.cpp test_bridge.cpp)
 
 target_link_libraries(test_main
-    PRIVATE project_options project_warnings bridge catch2::catch2 test_bridge)
+    PRIVATE project_options project_warnings catch2::catch2 gsl_microsoft::gsl_microsoft)
 
 include(${CONAN_CATCH2_ROOT}/lib/cmake/Catch2/Catch.cmake)
 
 enable_testing()
-catch_discover_tests(test_main TEST_PREFIX "bridge.")
+catch_discover_tests(test_main)

@@ -13,7 +13,7 @@ SCENARIO( "cards can be played ", "[bridge]" ) {
 	using Bridge::Bridge;
     using namespace Bridge;
     GIVEN( "A game of bridge" ) {
-        constexpr Bridge b(Player::West, Vulnerability::None);
+        Bridge b;
         WHEN( "a card is played" ) {
             constexpr Card c{Suit::Spades, Rank::Ace};
             b.Play(c);
