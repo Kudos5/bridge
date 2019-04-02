@@ -67,7 +67,7 @@ class Bridge {
     private:
         // Player m_dealer;
         // Vulnerability m_vulnerability;
-        Phase m_phase;
+        Phase m_phase = Phase::Play;
         [[nodiscard]] constexpr auto phase() const noexcept -> Phase {return m_phase;}
 };
 
