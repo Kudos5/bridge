@@ -63,7 +63,7 @@ enum class Vulnerability {
 class Bridge {
     public:
         // constexpr Bridge(Player dealer, Vulnerability vulnerability) noexcept;
-        constexpr auto Play(Card c) const noexcept -> void;
+        constexpr auto Play(Card c) const -> void;
     private:
         // Player m_dealer;
         // Vulnerability m_vulnerability;
@@ -76,7 +76,7 @@ class Bridge {
 // {
 // }
 
-constexpr auto Bridge::Play(Card c) const noexcept -> void
+constexpr auto Bridge::Play(Card c) const -> void
 {
     Expects(phase() == Phase::Play);
     Expects(c.suit == Suit::Spades);
