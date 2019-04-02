@@ -15,12 +15,50 @@ target_compile_features(project_options INTERFACE cxx_std_17)
 target_include_directories(project_options INTERFACE include external)
 
 # Taken from: https://github.com/lefticus/cpp_box
-if(MSVC)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   add_definitions(/W4 /w14545 /w34242 /w34254 /w34287 /w44263 /w44265 /w44296 /w44311 /w44826 /we4289 /w14546 /w14547 /w14549 /w14555 /w14619 /w14905 /w14906 /w14928 /WX "/permissive-")
   add_definitions(/std:c++17)
   # target_compile_options(project_options INTERFACE /std:c++17)
   # target_compile_options(project_warnings INTERFACE /W4 /WX "/permissive-")
-else()
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  target_compile_options(project_warnings
+                         INTERFACE -Wall
+                                   -Werror # treat all warnings as errors
+                                   -Wextra # reasonable and standard
+                                   -Wshadow # warn the user if a variable
+                                            # declaration shadows one from a
+                                            # parent context
+                                   -Wnon-virtual-dtor # warn the user if a class
+                                                      # with virtual functions
+                                                      # has a non-virtual
+                                                      # destructor. This helps
+                                                      # catch hard to track down
+                                                      # memory errors
+                                   -Wold-style-cast # warn for c-style casts
+                                   -Wcast-align # warn for potential performance
+                                                # problem casts
+                                   -Wunused # warn on anything being unused
+                                   -Woverloaded-virtual # warn if you overload
+                                                        # (not override) a
+                                                        # virtual function
+                                   -Wpedantic # warn if non-standard C++ is used
+                                   -Wconversion # warn on type conversions that
+                                                # may lose data
+                                   -Wsign-conversion # warn on sign conversions
+                                   -Wnull-dereference # warn if a null
+                                                      # dereference is detected
+                                   -Wdouble-promotion # warn if float is
+                                                      # implicit promoted to
+                                                      # double
+                                   -Wformat=2 # warn on security issues around
+                                              # functions that format output (ie
+                                              # printf)
+                                    -Weffc++ # Hopefully gives some helpful style warnings
+                                    -Og # Some warnings only show up under optimization
+                                    -Weverything
+                                    -Wno-c++98-compat # Unwanted waring introduced by Weverything
+                         )
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(project_warnings
                          INTERFACE -Wall
                                    -Werror # treat all warnings as errors
@@ -57,6 +95,8 @@ else()
                                     -Og # Some warnings only show up under optimization
 
                          )
+else()
+    message(FATAL_ERROR "Unknown or not supported compiler ID=${CMAKE_CXX_COMPILER_ID} CXX=${CMAKE_CXX_COMPILER}")
 endif()
 # Taken from https://github.com/ChaiScript/ChaiScript/blob/develop/.travis.yml
 #
