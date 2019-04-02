@@ -1,11 +1,12 @@
 
-#ifndef _BRIDGE_HPP_
-#define _BRIDGE_HPP_
+#ifndef BRIDGE_HPP
+#define BRIDGE_HPP
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif // __GNUC__
+#define GSL_THROW_ON_CONTRACT_VIOLATION
 #include <gsl/gsl>
 #ifdef __GNUC__
 #pragma GCC diagnostic pop
@@ -67,7 +68,7 @@ class Bridge {
         // Player m_dealer;
         // Vulnerability m_vulnerability;
         Phase m_phase;
-        [[nodiscard]] constexpr auto phase() const noexcept -> Phase {return m_phase;};
+        [[nodiscard]] constexpr auto phase() const noexcept -> Phase {return m_phase;}
 };
 
 // constexpr Bridge::Bridge(Player dealer, Vulnerability vulnerability) noexcept
@@ -82,4 +83,4 @@ constexpr auto Bridge::Play(Card c) const noexcept -> void
 }
 } // end namespace Bridge
 
-#endif // _BRIDGE_HPP_
+#endif // BRIDGE_HPP
