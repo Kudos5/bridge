@@ -53,6 +53,8 @@ else()
                                    -Wformat=2 # warn on security issues around
                                               # functions that format output (ie
                                               # printf)
+                                    -Weffc++ # Hopefully gives some helpful style warnings
+                                    -Og # Some warnings only show up under optimization
 
                          )
 endif()
